@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.util.nebulaHardware;
+package org.firstinspires.ftc.teamcode.util;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.ServoImplEx;
