@@ -1,33 +1,30 @@
 package org.firstinspires.ftc.teamcode.util;
+
+import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.hardware.ServoImplEx;
 
 public class NebulaServo {
-    public enum Direction { Forward, Reverse }
+    private Servo servoPos;
+    private CRServo servoRot;
 
-    private final ServoImplEx servo;
-    private final boolean isEnabled;
 
-    public NebulaServo(HardwareMap hM, String deviceId,
-                       Direction direction, boolean isEnabled) {
-        servo = (ServoImplEx) hM.get(Servo.class, deviceId);
-        this.isEnabled = isEnabled;
 
-        servo.setDirection(direction == Direction.Reverse ?
-                Servo.Direction.REVERSE : Servo.Direction.FORWARD);
-    }
 
-    public void setPosition(double position) {
-        // Standard servo: clamp 0..1
-        position = Math.max(0, Math.min(1, position));
-        servo.setPosition(position);
-    }
+public void init(HardwareMap hardwareMap){
+    servoPos = hardwareMap.get(Servo.class, "NebulaServo");
+    servoRot = hardwareMap.get(CRServo.class, "NebulaCRServo");
+    servoPos.scaleRange(0.5,1.0);
+    servoPos.setDirection(Servo.Direction.REVERSE);
+    servoRot.setDirection(DcMotorSimple.Direction.REVERSE);
+}
+public void setServoPos(double angle){
+    servoPos.setPosition(angle);
+}
+public void setServoRot(double power){
+    servoRot.setPower(power);
+}
 
-    public double getPosition() {
-        return servo.getPosition();
-    }
-    public double getSpeed() {
-        return (servo.getPosition() - 0.5) * 2.0;
-    }
 }
